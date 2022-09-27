@@ -1,13 +1,9 @@
 import 'package:bmi_calculator/reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'constants.dart';
 
 import 'icon_content.dart';
-
-const bottomContainerHeight = 80.0;
-const bottomContainerColor = Color(0xFFEB1555);
-const activeCardColor = Color(0xFF1E1D33);
-
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -17,6 +13,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  late kGender selectedGender;
+  late int height = 180;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +23,44 @@ class _InputPageState extends State<InputPage> {
         title: const Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(
-                    clr: activeCardColor,
-                    cardChild: IconContent(
-                      label: "MALE",
-                      icn: const Icon(FontAwesomeIcons.mars,size: 80.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = kGender.male;
+                      });
+                    },
+                    child: ReusableCard(
+                      clr: selectedGender == kGender.male
+                          ? kActiveCardColor
+                          : kInActiveCardColor,
+                      cardChild: IconContent(
+                        label: "MALE",
+                        icn: const Icon(FontAwesomeIcons.mars, size: 80.0),
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
-                    clr: activeCardColor,
-                    cardChild: IconContent(
-                        label: "FEMALE",
-                        icn: const Icon(FontAwesomeIcons.venus,size: 80.0)),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = kGender.female;
+                      });
+                    },
+                    child: ReusableCard(
+                      clr: selectedGender == kGender.female
+                          ? kActiveCardColor
+                          : kInActiveCardColor,
+                      cardChild: IconContent(
+                          label: "FEMALE",
+                          icn: const Icon(FontAwesomeIcons.venus, size: 80.0)),
+                    ),
                   ),
                 ),
               ],
@@ -53,7 +70,57 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(clr: activeCardColor),
+                  child: ReusableCard(
+                    clr: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Height",
+                          style: kLabelTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              height.toString(),
+                              style: kNumberStyle,
+                            ),
+                            const SizedBox(
+                              width: 2.0,
+                            ),
+                            const Text(
+                              "cm",
+                              style: kLabelTextStyle,
+                            )
+                          ],
+                        ),
+                        SliderTheme(
+                          data: const SliderThemeData(
+                              thumbShape: RoundSliderThumbShape(
+                                  enabledThumbRadius: 15.0),
+                              overlayShape:
+                                  RoundSliderOverlayShape(overlayRadius: 30.0),
+                              thumbColor: kSliderControlColor,
+                              activeTrackColor: kActiveSliderColor,
+                              inactiveTrackColor: kInActiveSliderColor,
+                              overlayColor: kSliderOverlayColor),
+                          child: Slider(
+                            value: height.toDouble(),
+                            onChanged: (double newHeight) {
+                              setState(() {
+                                height = newHeight.round();
+                              });
+                            },
+                            min: kSliderMin,
+                            max: kSliderMax,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),
@@ -62,25 +129,22 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(clr: activeCardColor),
+                  child: ReusableCard(clr: kActiveCardColor),
                 ),
                 Expanded(
-                  child: ReusableCard(clr: activeCardColor),
+                  child: ReusableCard(clr: kActiveCardColor),
                 ),
               ],
             ),
           ),
           Container(
-            color: bottomContainerColor,
+            color: kBottomContainerColor,
             margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomContainerHeight,
+            height: kBottomContainerHeight,
           )
         ],
       ),
     );
   }
 }
-
-
-

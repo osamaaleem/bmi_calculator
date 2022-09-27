@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
 class ReusableCard extends StatelessWidget {
   ReusableCard({required this.cardChild, required this.clr});
