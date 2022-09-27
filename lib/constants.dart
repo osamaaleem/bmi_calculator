@@ -12,6 +12,7 @@ const kActiveSliderColor = Colors.white;
 const kInActiveSliderColor = Color(0xFF8D8E98);
 const kSliderControlColor = Color(0xFFEB1555);
 const kSliderOverlayColor = Color(0x29EB1555);
+const kRawMaterialBtnFillClr = Color(0xFF4C4F5E);
 enum kGender {
   male,
   female
