@@ -1,3 +1,5 @@
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/result_page.dart';
 import 'package:bmi_calculator/reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -245,14 +247,33 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBottomContainerColor,
-            margin: const EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          GestureDetector(
+            onTap: () {
+              CalculatorBrain calc = CalculatorBrain();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ResultPage(calc.calculate(height, weight))));
+            },
+            child: BottomButton(label: "CALCULATE",),
           )
         ],
       ),
+    );
+  }
+}
+
+class BottomButton extends StatelessWidget {
+
+  BottomButton({super.key, required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kBottomContainerColor,
+      margin: const EdgeInsets.only(top: 10.0),
+      width: double.infinity,
+      height: kBottomContainerHeight,
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Center(child: Text(label,style: kLargeBtnTextStyle,)),
     );
   }
 }
